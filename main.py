@@ -30,12 +30,12 @@ def main(data, output):
 	param_space = {
 		"activation": hp.choice("activation", ["relu", "LeakyReLU", "softmax", "tanh"]),
 		"hidden_units": scope.int(hp.quniform("hidden_units", 10, 100, 1)),
-		"hidden_layers": scope.int(hp.quniform("hidden_layers", 1, 5, 1)),
+		"hidden_layers": scope.int(hp.quniform("hidden_layers", 1, 2, 1)),
 		"epochs": scope.int(hp.quniform("epochs", 20, 200, 1))
 	}
 	objective_function = partial(evaluate_network, x=x, y=y, x_test=x_test, y_test=y_test)
 	trials = Trials()
-	best = fmin(fn=objective_function, space=param_space, algo=tpe.suggest, max_evals=10, trials=trials)
+	best = fmin(fn=objective_function, space=param_space, algo=tpe.suggest, max_evals=20, trials=trials)
 	trail_results = trials.results
 	trail_data = pd.DataFrame([di["trail_data"] for di in trail_results]).sort_values("Test_Accuracy", ascending=False)
 	train_loss_per_epoch = pd.Series(trail_data["train_loss_per_epoch"][0])
@@ -46,6 +46,6 @@ def main(data, output):
 
 
 if __name__ == '__main__':
-	data_file = pd.read_csv("data/BankNote_Authentication.csv")
-	output = "BankNote_Authentication_Results"
+	data_file = pd.read_csv("data/Iris.csv")
+	output = "Iris_Results"
 	main(data_file, output)

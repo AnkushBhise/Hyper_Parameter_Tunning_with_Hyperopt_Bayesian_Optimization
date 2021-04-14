@@ -12,7 +12,7 @@ def div_into_x_y(data):
 	# x = data.iloc[:, :-1]
 	# y = data.iloc[:, -1]
 	
-	# Use for Iris Data
+	# # Use for Iris Data
 	x = data.iloc[:, 1:-1]
 	y = data.iloc[:, -1]
 	
